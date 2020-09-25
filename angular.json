@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "projects": {
+    "auth-client": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/auth-client",
+      "sourceRoot": "apps/auth-client/src",
+      "prefix": "my-auth-app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/auth-client",
+            "index": "apps/auth-client/src/index.html",
+            "main": "apps/auth-client/src/main.ts",
+            "polyfills": "apps/auth-client/src/polyfills.ts",
+            "tsConfig": "apps/auth-client/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/auth-client/src/favicon.ico",
+              "apps/auth-client/src/assets"
+            ],
+            "styles": ["apps/auth-client/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/auth-client/src/environments/environment.ts",
+                  "with": "apps/auth-client/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "auth-client:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "auth-client:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "auth-client:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/auth-client/tsconfig.app.json",
+              "apps/auth-client/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/auth-client/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/auth-client/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "auth-client-e2e": {
+      "root": "apps/auth-client-e2e",
+      "sourceRoot": "apps/auth-client-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/auth-client-e2e/cypress.json",
+            "tsConfig": "apps/auth-client-e2e/tsconfig.e2e.json",
+            "devServerTarget": "auth-client:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "auth-client:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/auth-client-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/auth-client-e2e/**/*"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "auth-client"
+}
