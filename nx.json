@@ -28,6 +28,9 @@
     "auth-client-e2e": {
       "tags": [],
       "implicitDependencies": ["auth-client"]
+    },
+    "auth-server": {
+      "tags": []
     }
   }
 }

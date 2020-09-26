@@ -1,0 +1,99 @@
+input.ng-valid {
+  box-shadow: 0 0 15px green;
+}
+
+input.ng-invalid {
+  box-shadow: 0 0 15px red;
+}
+
+input {
+  border-radius: 15px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  margin: 15px;
+  display: block;
+  min-width: 250px;
+}
+
+button {
+  padding: 15px;
+  min-width: 250px;
+  margin: 20px;
+  margin-top: 15%;
+  border: none;
+  border-radius: 10px;
+  background-color: black;
+  outline: none;
+  color: white;
+  box-shadow: 0 0 15px yellow;
+  text-shadow: 0 0 10px white;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.02);
+    filter: invert(1);
+  }
+}
+
+label {
+  margin-left: 15px;
+}
+
+h1 {
+  font-family: 'Comfortaa', cursive;
+}
+
+.warning {
+  background-color: rgb(255, 135, 135);
+  padding: 15px;
+  border-radius: 10px;
+  max-width: 265px;
+  color: black;
+  margin-top: 20px;
+}
+
+form {
+  margin: auto;
+}
+
+.login-form {
+  display: inline-block;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 15%;
+  margin-bottom: 15%;
+}
+
+:host {
+  display: block;
+  border: 1px solid rgb(79, 255, 255);
+  margin: auto;
+  border-radius: 15px;
+  margin-top: 10%;
+  width: 20%;
+  min-height: 58vh;
+  padding: 15px;
+  box-shadow: 0 0 15px 0 rgb(86, 221, 255);
+}
+
+@keyframes add {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.warnblock {
+  padding: 10px;
+  background-color: rgb(253, 255, 128);
+  border-radius: 15px;
+  margin: 25px;
+  box-shadow: 0 0 10px 0 rgb(141, 141, 0);
+  animation: add 1s ease-in-out;
+}

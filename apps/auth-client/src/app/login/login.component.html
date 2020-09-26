@@ -1,0 +1,42 @@
+<h1>Вход в приложение</h1>
+<form [formGroup]="logForm" class="login-form">
+  <label for="login">Логин:</label>
+  <input type="text" id="login" formControlName="login" />
+  <p
+    *ngIf="
+      logFormControls['login'].invalid &&
+      logFormControls['login'].value.length > 0
+    "
+    class="warnblock"
+  >
+    <mat-icon>warning</mat-icon>
+    Требуется ввести от 2 до 15 символов
+  </p>
+  <label for="password">Пароль:</label>
+  <input type="password" id="password" formControlName="password" />
+  <p
+    *ngIf="
+      logFormControls['password'].invalid &&
+      logFormControls['password'].value.length > 0
+    "
+    class="warnblock"
+  >
+    <mat-icon>warning</mat-icon>
+    Требуется ввести от 2 до 15 символов
+  </p>
+  <div *ngIf="attempts" class="warning">
+    <p *ngIf="attempts === 1">
+      Внимание! У вас осталось {{ 3 - attempts }} попытки, вводите правильный
+      логин/пароль!
+    </p>
+    <p *ngIf="attempts === 2">
+      Последняя попытка!
+    </p>
+    <p *ngIf="attempts === 3">
+      Количество попыток исчерпано!
+    </p>
+  </div>
+  <button type="submit" (click)="login()" [disabled]="logForm.invalid">
+    Войти
+  </button>
+</form>

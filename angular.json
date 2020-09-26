@@ -25,7 +25,10 @@
               "apps/auth-client/src/favicon.ico",
               "apps/auth-client/src/assets"
             ],
-            "styles": ["apps/auth-client/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "apps/auth-client/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -62,7 +65,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "auth-client:build"
+            "browserTarget": "auth-client:build",
+            "proxyConfig": "apps/auth-client/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -83,7 +87,10 @@
               "apps/auth-client/tsconfig.app.json",
               "apps/auth-client/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/auth-client/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/auth-client/**/*"
+            ]
           }
         },
         "test": {
@@ -116,15 +123,80 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/auth-client-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/auth-client-e2e/**/*"]
+            "tsConfig": [
+              "apps/auth-client-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/auth-client-e2e/**/*"
+            ]
+          }
+        }
+      }
+    },
+    "auth-server": {
+      "root": "apps/auth-server",
+      "sourceRoot": "apps/auth-server/src",
+      "projectType": "application",
+      "prefix": "auth-server",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/auth-server",
+            "main": "apps/auth-server/src/main.ts",
+            "tsConfig": "apps/auth-server/tsconfig.app.json",
+            "assets": [
+              "apps/auth-server/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/auth-server/src/environments/environment.ts",
+                  "with": "apps/auth-server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "auth-server:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/auth-server/tsconfig.app.json",
+              "apps/auth-server/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/auth-server/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/auth-server/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular"
+    "defaultCollection": "@nrwl/angular",
+    "analytics": false
   },
   "schematics": {
     "@nrwl/workspace": {
