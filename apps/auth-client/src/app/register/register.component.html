@@ -5,7 +5,7 @@
   [formGroup]="registerModel"
   (ngSubmit)="onSubmit()"
 >
-  <mat-form-field appearance="fll">
+  <mat-form-field appearance="fill">
     <mat-label>Имя пользователя: </mat-label>
     <input
       type="text"
@@ -43,12 +43,9 @@
       required
       formControlName="password"
     />
-    <mat-error *ngIf="registerControls['password'].value.length < 7"
-      >Слабый пароль!</mat-error
+    <mat-error *ngIf="registerControls['password'].invalid"
+      >Пароль не соответствует требованиям</mat-error
     >
-    <mat-error *ngIf="registerControls['password'].value.length > 25">
-      Сложный пароль!
-    </mat-error>
   </mat-form-field>
   <button type="submit" mat-raised-button color="primary">
     Зарегистрироваться

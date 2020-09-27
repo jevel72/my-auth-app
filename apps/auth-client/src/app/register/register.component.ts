@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
+import { PasswordValidators } from 'ngx-validators';
+
 type Controls = { [key: string]: AbstractControl };
 
 @Component({
@@ -41,14 +43,11 @@ export class RegisterComponent implements OnInit {
           Validators.required,
           Validators.minLength(7),
           Validators.maxLength(30),
-        ],
-      ],
-      passwordConfirm: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(7),
-          Validators.maxLength(30),
+          PasswordValidators.digitCharacterRule(1),
+          PasswordValidators.alphabeticalCharacterRule(3),
+          PasswordValidators.lowercaseCharacterRule(1),
+          PasswordValidators.uppercaseCharacterRule(1),
+          PasswordValidators.repeatCharacterRegexRule(3),
         ],
       ],
     });
