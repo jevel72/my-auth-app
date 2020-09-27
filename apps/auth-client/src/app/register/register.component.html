@@ -1,1 +1,56 @@
-<p>register works!</p>
+<h2>Регистрация</h2>
+<form
+  action="/register"
+  method="POST"
+  [formGroup]="registerModel"
+  (ngSubmit)="onSubmit()"
+>
+  <mat-form-field appearance="fll">
+    <mat-label>Имя пользователя: </mat-label>
+    <input
+      type="text"
+      placeholder="Вася Иванов"
+      matInput
+      required
+      formControlName="username"
+    />
+    <mat-error *ngIf="registerControls['username'].invalid"
+      >Некорректное имя пользователя</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Логин: </mat-label>
+    <input
+      type="text"
+      placeholder="GameOver1"
+      matInput
+      required
+      formControlName="login"
+    />
+    <mat-error *ngIf="registerControls['login'].invalid"
+      >Некорректно задан логин</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-icon matSuffix (click)="hide = !hide">{{
+      hide ? 'visibility' : 'visibility_off'
+    }}</mat-icon>
+    <mat-label>Пароль: </mat-label>
+    <input
+      [type]="hide ? 'password' : 'text'"
+      placeholder="Придумай сложный пароль"
+      matInput
+      required
+      formControlName="password"
+    />
+    <mat-error *ngIf="registerControls['password'].value.length < 7"
+      >Слабый пароль!</mat-error
+    >
+    <mat-error *ngIf="registerControls['password'].value.length > 25">
+      Сложный пароль!
+    </mat-error>
+  </mat-form-field>
+  <button type="submit" mat-raised-button color="primary">
+    Зарегистрироваться
+  </button>
+</form>

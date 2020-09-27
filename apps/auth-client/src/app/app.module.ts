@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
@@ -27,12 +29,16 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatTableModule,
-    MatButtonModule,
-    MatIconModule,
     ReactiveFormsModule,
-    AppRoutingModule,
     HttpClientModule,
+    // material
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    // custom
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
