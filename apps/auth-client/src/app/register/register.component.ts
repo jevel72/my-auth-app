@@ -5,9 +5,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { PasswordValidators } from 'ngx-validators';
+
+import { CheckAuthService } from '../services/check.service';
 
 type Controls = { [key: string]: AbstractControl };
 
@@ -17,7 +20,12 @@ type Controls = { [key: string]: AbstractControl };
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router,
+    private check: CheckAuthService
+  ) {}
 
   ngOnInit(): void {
     this.registerModel = this.fb.group({
@@ -60,7 +68,19 @@ export class RegisterComponent implements OnInit {
   public onSubmit(): void {
     if (this.registerModel.valid) {
       const { passwordConfirm, ...registerDTO } = this.registerModel.value;
-      console.log(registerDTO);
+      this.http
+        .post('/api/register', registerDTO, {
+          headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+        })
+        .subscribe((user) => {
+          if (typeof user !== 'string') {
+            localStorage.setItem('user', JSON.stringify(user));
+            this.check.userLoggedIn();
+            this.router.navigateByUrl('/users');
+          } else {
+            alert('User already exists!');
+          }
+        });
     }
   }
 }

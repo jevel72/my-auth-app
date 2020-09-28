@@ -8,10 +8,12 @@ import {
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CheckAuthService } from '../services/check.service';
-import { distinctUntilChanged, retry, catchError, tap } from 'rxjs/operators';
+import { distinctUntilChanged, retry, catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+
+import { PasswordValidators } from 'ngx-validators';
 
 @UntilDestroy()
 @Component({
@@ -43,6 +45,11 @@ export class LoginComponent implements OnInit {
           Validators.required,
           Validators.minLength(2),
           Validators.maxLength(15),
+          PasswordValidators.digitCharacterRule(1),
+          PasswordValidators.alphabeticalCharacterRule(3),
+          PasswordValidators.lowercaseCharacterRule(1),
+          PasswordValidators.uppercaseCharacterRule(1),
+          PasswordValidators.repeatCharacterRegexRule(3),
         ],
       ],
     });
@@ -67,11 +74,11 @@ export class LoginComponent implements OnInit {
         catchError(() => EMPTY),
         untilDestroyed(this)
       )
-      .subscribe(() => {
+      .subscribe((user) => {
         this.attempts = 0;
         this.check.userLoggedIn();
         this.router.navigateByUrl('/users');
-        localStorage.setItem('user', JSON.stringify(this.logForm.value));
+        localStorage.setItem('user', JSON.stringify(user));
       });
     this.attempts++;
   }

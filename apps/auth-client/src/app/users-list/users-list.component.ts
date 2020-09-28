@@ -7,7 +7,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
 interface User {
-  id: number;
   username: string;
   login: string;
 }
@@ -21,10 +20,23 @@ interface User {
 export class UsersListComponent implements OnInit {
   constructor(private http: HttpClient, private title: Title) {}
   ngOnInit(): void {
+    this.makeRequest();
+    this.title.setTitle('Список пользователей');
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user')).status;
+    } else {
+      this.user = 'low';
+    }
+  }
+  private makeRequest(): void {
     this.listOfUsers$ = this.http
       .get<User[]>('/api/users')
       .pipe(untilDestroyed(this), distinctUntilChanged());
-    this.title.setTitle('Список пользователей');
+  }
+  public deleteUser(id: string) {
+    this.listOfUsers$ = this.http.delete<User[]>(`/api/delete/${id}`);
   }
   public listOfUsers$: Observable<User[]>;
+  public user;
+  public displayedColumns: string[] = ['id', 'username', 'login', 'status'];
 }
