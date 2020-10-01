@@ -33,7 +33,12 @@ import { RegisterComponent } from '../register/register.component';
         MatInputModule,
         MatFormFieldModule,
         MatToolbarModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot({
+            validationMessages: [
+                { name: 'required', message: 'Пустое поле!' },
+                { name: 'minlength', message: 'Недостаточно символов!' },
+            ],
+        }),
         FormlyMaterialModule,
         NgxsModule.forRoot([], { developmentMode: !environment.production })
     ],
@@ -41,8 +46,8 @@ import { RegisterComponent } from '../register/register.component';
         NotFoundComponent,
         UsersListComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
     ],
-    exports: [MatButtonModule]
+    exports: [MatButtonModule],
 })
 export class AppCoreModule {}

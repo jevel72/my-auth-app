@@ -1,52 +1,13 @@
 <form
   action="/register"
   method="POST"
-  [formGroup]="registerModel"
+  [formGroup]="form"
   (ngSubmit)="onSubmit()"
 >
-  <h2>Регистрация</h2>
-  <mat-form-field appearance="fill">
-    <mat-label>Имя пользователя: </mat-label>
-    <input
-      type="text"
-      placeholder="Вася Иванов"
-      matInput
-      required
-      formControlName="username"
-    />
-    <mat-error *ngIf="registerControls['username'].invalid"
-      >Некорректное имя пользователя</mat-error
-    >
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Логин: </mat-label>
-    <input
-      type="text"
-      placeholder="GameOver1"
-      matInput
-      required
-      formControlName="login"
-    />
-    <mat-error *ngIf="registerControls['login'].invalid"
-      >Некорректно задан логин</mat-error
-    >
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-icon matSuffix (click)="hide = !hide">{{
+  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+  <mat-icon matSuffix (click)="toggleHide()">{{
       hide ? 'visibility' : 'visibility_off'
     }}</mat-icon>
-    <mat-label>Пароль: </mat-label>
-    <input
-      [type]="hide ? 'password' : 'text'"
-      placeholder="Придумай сложный пароль"
-      matInput
-      required
-      formControlName="password"
-    />
-    <mat-error *ngIf="registerControls['password'].invalid"
-      >Пароль не соответствует требованиям</mat-error
-    >
-  </mat-form-field>
   <button type="submit" mat-raised-button color="primary">
     Зарегистрироваться
   </button>
