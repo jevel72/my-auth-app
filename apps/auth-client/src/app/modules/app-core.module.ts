@@ -42,6 +42,7 @@ import { RegisterComponent } from '../register/register.component';
         UsersListComponent,
         LoginComponent,
         RegisterComponent
-    ]
+    ],
+    exports: [MatButtonModule]
 })
 export class AppCoreModule {}
